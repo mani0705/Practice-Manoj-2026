@@ -17,6 +17,16 @@ public class MergeKSortedLists {
         ListNode curr = dummy;
 
         // Step 2: Build result (O(N log K) total)
+        /*List 1: 1 → 4 → 5
+        List 2: 1 → 3 → 4
+        List 3: 2 → 6
+        Initial queue: [1, 1, 2]
+        Pick 1 (from List 1), add 4 to queue: [1, 2, 4]
+        Pick 1 (from List 2), add 3: [2, 3, 4]
+        Pick 2 (from List 3), add 6: [3, 4, 6]
+        Pick 3, add 4: [4, 4, 6]
+        Pick 4, add 5: [4, 5, 6]
+        ...and so on, always picking the smallest and updating the queue.*/
         while (!pq.isEmpty()) {
             ListNode min = pq.poll();     // O(log K): Get global smallest
             curr.next = min;              // Splice it in
