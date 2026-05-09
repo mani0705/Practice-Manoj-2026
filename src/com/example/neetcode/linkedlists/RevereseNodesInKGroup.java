@@ -32,58 +32,45 @@ public class RevereseNodesInKGroup {
         }
 
         int groups = counter/k;
-        int c=0;
-        int loopCounter = 0;
-        while(c<groups){
-            head = reverseList(head,loopCounter,k , groups , c);
-            c++;
-        }
-        return head;
-    }
 
+        ListNode newHead = head;
+        ListNode prevTail = null;
+        curr = head;
 
-    private ListNode reverseList(ListNode head ,int loopCounter , int k , int number , int c) {
-        ListNode temp = head;
-        ListNode prevA = null;
-        int min = 0;
-        ListNode prevP = null;
-        while(c!=0 && min<c*k){
-            prevA = temp;
-            temp=temp.next;
-            min++;
-        }
-        ListNode curr = temp;
-        ListNode prevp = null;
+        for (int g = 0; g < groups; g++) {
+            ListNode groupHead = curr;
+            ListNode prev = null;
 
-        ListNode nextP = null;
-        while(loopCounter<k){
-            nextP = curr.next;
-            curr.next = prevP;
-            prevP = curr;
-            curr = nextP;
-            loopCounter++;
+            for (int i = 0; i < k; i++) {
+                ListNode next = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = next;
+            }
+
+            if (prevTail == null) {
+                newHead = prev;
+            } else {
+                prevTail.next = prev;
+            }
+
+            prevTail = groupHead;
         }
-        ListNode dummy = prevP;
-        while(dummy.next!=null){
-            dummy = dummy.next;
-        }
-        dummy.next=curr;
-        if(prevA!=null){
-            prevA.next=prevP;
-        }
-        return prevP;
+        prevTail.next = curr;
+        return newHead;
     }
 
     public static void main(String[] args) {
         // list node 1 -> 2 -> 3 ->  4 -> 5
         ListNode listNode = new ListNode(1, new ListNode(2, new ListNode(3,new ListNode(4,new ListNode(5)))));
+
         RevereseNodesInKGroup revereseNodesInKGroup = new RevereseNodesInKGroup();
-        ListNode result
-                =  revereseNodesInKGroup.reverseKGroup(listNode , 2);
+        ListNode result =  revereseNodesInKGroup.reverseKGroup(listNode , 2);
         while(result!=null){
             System.out.print(result.val+"->");
             result = result.next;
         }
         System.out.print(""+null);
+        System.out.println();
     }
 }
