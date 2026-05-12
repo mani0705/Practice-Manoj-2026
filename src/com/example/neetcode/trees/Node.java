@@ -1,4 +1,4 @@
-package com.example;
+package com.example.neetcode.trees;
 
 public class Node {
 
@@ -8,6 +8,10 @@ public class Node {
 
     public Node(int data){
         this.data=data;
+    }
+
+    public Node() {
+
     }
 
     public int getData() {
