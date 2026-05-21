@@ -30,7 +30,18 @@ public class BinaryTreeLeetcode {
         inorder(root);
         //TreeNode invertRoot = invert(root);
         //inorder(invertRoot);
-        System.out.print("the heigh of the tree is "+maxDepth(root));
+        System.out.println("the heigh of the tree is "+maxDepth(root));
+        System.out.println("the diameter of the tree is "+diameterOfBinaryTree(root));
+        System.out.println("is the tree balanced ?"+isBalanced(root));
+        TreeNode rootAnother = create();
+        System.out.println("the heigh of the other tree is "+maxDepth(rootAnother));
+        System.out.println("the diameter of the other tree is "+diameterOfBinaryTree(rootAnother));
+        System.out.println("is the other tree balanced ?"+isBalanced(rootAnother));
+        boolean sameTree = isSameTree(root,rootAnother);
+        System.out.println("are the two trees same ?" +sameTree);
+        System.out.println("going to check tree and subtree problem ");
+        boolean checkSubTree = isSubtree(root , rootAnother);
+        System.out.println("is rootAnother a sub tree of root? "+checkSubTree);
     }
 
     static Scanner sc = new Scanner(System.in);
@@ -125,11 +136,75 @@ public class BinaryTreeLeetcode {
 
     The number of nodes in the tree is in the range [1, 104].
             -100 <= Node.val <= 100*/
+    static int max;
     public static int diameterOfBinaryTree(TreeNode root) {
+        max = 0;
         if(root==null)
             return 0;
-        int leftmax = maxDepth(root.left);
-        int rightmax = maxDepth(root.right);
-        int max = Math.max(leftmax,rightmax,max);
+        heightOfTree(root);
+        return max;
+    }
+
+    public static int heightOfTree(TreeNode root){
+        if(root==null)
+            return 0;
+        int left = heightOfTree(root.left);
+        int right = heightOfTree(root.right);
+        max = Math.max(max , left+right);
+        return Math.max(left , right)+1;
+    }
+
+    public static boolean isBalanced(TreeNode root) {
+        return heightOfTreeBalanced(root)==-1?false:true;
+    }
+    public static int heightOfTreeBalanced(TreeNode root){
+        if(root==null)
+            return 0;
+        int left = heightOfTreeBalanced(root.left);
+        if(left==-1){
+            return -1;
+        }
+        int right = heightOfTreeBalanced(root.right);
+        if (right==-1){
+            return -1;
+        }
+        if(Math.abs(left-right)>1){
+            return -1;
+        }
+        return Math.max(left , right)+1;
+    }
+
+
+
+    public static boolean isSameTree(TreeNode p, TreeNode q) {
+        if((p!=null) && (q==null))
+            return false;
+        if((q!=null) && (p==null))
+            return false;
+        if(p==null && q==null)
+            return true;
+        if(p.val!=q.val)
+            return false;
+        boolean leftCheck= isSameTree(p.left,q.left);
+        if(leftCheck==false)
+            return false;
+        boolean rightCheck = isSameTree(p.right,q.right);
+        if(rightCheck==false)
+            return false;
+        return true;
+    }
+
+    public static boolean isSubtree(TreeNode root, TreeNode subRoot) {
+        if(isSameTree(root,subRoot))
+            return true;
+        if(root!=null) {
+            boolean leftCheck = isSubtree(root.left, subRoot);
+            if (leftCheck == true)
+                return leftCheck;
+            boolean rightCheck = isSubtree(root.right, subRoot);
+            if (rightCheck == true)
+                return rightCheck;
+        }
+        return false;
     }
 }
