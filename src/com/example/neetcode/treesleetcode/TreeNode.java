@@ -1,4 +1,4 @@
-package com.example.neetcode.linkedlists.treesleetcode;
+package com.example.neetcode.treesleetcode;
 
 public class TreeNode {
     int val;

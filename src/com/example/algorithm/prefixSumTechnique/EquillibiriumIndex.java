@@ -1,7 +1,9 @@
 package com.example.algorithm.prefixSumTechnique;
 
 
-/*Problem Statement: Given an array of n integers, find if any index exists such that the sum of elements to its right is equal to the sum of elements to its left. If yes print the index, otherwise print “No Equilibrium”.
+/*Problem Statement: Given an array of n integers, find if any index exists such
+that the sum of elements to its right is equal to the sum of elements to its left.
+ If yes print the index, otherwise print “No Equilibrium”.
 
 Examples:
 
